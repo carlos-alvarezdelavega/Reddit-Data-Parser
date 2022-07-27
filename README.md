@@ -1,6 +1,6 @@
 # About the Pushshift Reddit API Crawler
 
-This code tool uses the [pushshift.io](https://pushshift.io/) and `python` to scrap [Reddit](https://www.reddit.com/) data. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code researchers, hence, I've avoided technical jarggon. When run successfully, this code allows you to get Reddit posts and their associated comments within a designated timeframe. You will get this data organized in a .csv file that can be opened Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
+This code tool uses the [pushshift.io](https://pushshift.io/) and `python` to scrap [Reddit](https://www.reddit.com/) data. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code researchers, hence, I've avoided technical jarggon. When run successfully, this code allows you to get Reddit posts and their associated comments within a designated timeframe. You will get this data organized in a .csv file that can be opened on Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
 
 ## Getting Started
 
@@ -43,4 +43,15 @@ import datetime
 
 A function is a block of code which only runs when it is called.
 
-You can pass data, known as parameters, into a function.
+You can pass data, known as parameters, into a function. This function sets up the Pushshift URL to get the Reddit data from. 
+
+```python
+# In[2]:
+
+def getPushshiftData(after, before, sub):
+    url = 'https://api.pushshift.io/reddit/search/submission/?&size=1000&after='+str(after)+'&before='+str(before)+'&subreddit='+str(sub)
+    print(url)
+    r = requests.get(url)
+    data = json.loads(r.text)
+    return data['data']
+```
