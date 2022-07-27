@@ -1,11 +1,11 @@
 # About the Pushshift Reddit API Crawler
 
-This code tool uses the [pushshift.io](https://pushshift.io/) and `python` to scrap [Reddit](https://www.reddit.com/) data. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code experts, hence, I avoid technical jarggon. When run successfully, this code allows you to get Reddit posts and their associated comments within a designated timeframe. You will get this data organized in a .csv file that can be opened Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
+This code tool uses the [pushshift.io](https://pushshift.io/) and `python` to scrap [Reddit](https://www.reddit.com/) data. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code researchers, hence, I've avoided technical jarggon. When run successfully, this code allows you to get Reddit posts and their associated comments within a designated timeframe. You will get this data organized in a .csv file that can be opened Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
 
 ## Getting Started
 
 ### How do I run Python on my computer?
-I **strongly** recommend you download and install [Anaconda](https://www.anaconda.com/) and use [Jupyter Notebook](https://jupyter.org/) to run your `python` code. Jupyter Notebook allows you to break down your code's components, detect, and correct errors easily. It also installs the pre-required libraries to run this tool successfully. Check out a guide on [how to install Anaconda and run your Jupyter Notebook](https://sparkbyexamples.com/python/install-anaconda-jupyter-notebook/).
+I *strongly* recommend you download and install [Anaconda](https://www.anaconda.com/) and use [Jupyter Notebook](https://jupyter.org/) to run your `python` code. Jupyter Notebook allows you to break down your code's components, detect, and correct errors easily. It also installs the pre-required libraries to run this tool successfully. Check out a guide on [how to install Anaconda and run your Jupyter Notebook](https://sparkbyexamples.com/python/install-anaconda-jupyter-notebook/).
 
 ### Python notes to keep in mind
 In Python, hashtag '#' symbols represent in-line comments. Comments are lines of code that are *ignored* when running the program. You'll see the tool uses these comments to signpost key components. Comments are helpful to track the relevant variables you want to manipulate. For example: 
@@ -22,7 +22,7 @@ after = "1514764800" #Timestamp January 1st
 
 Head to the folder above. Copy and paste the code into the notebook's cells. Each cell is commented in the code. 
 
-## Breaking Down the Important Lines of Code
+## Breaking Down the Tool's Components
 
 ### Import libraries
 
