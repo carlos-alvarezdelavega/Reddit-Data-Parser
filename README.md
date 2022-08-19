@@ -22,7 +22,7 @@ after = "1514764800" #Timestamp January 1st
 
 Once you've opened your new Jupyter Notebook, head to the folder above. Copy and paste the code into the notebook's cells. Each cell is commented in the code. 
 
-## Tool's Components
+## Code Overview
 
 ### Import libraries
 
