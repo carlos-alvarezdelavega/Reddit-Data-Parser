@@ -1,6 +1,6 @@
 # About the Pushshift Reddit API Crawler
 
-This code tool uses the [pushshift.io](https://pushshift.io/) and `python` to scrap [Reddit](https://www.reddit.com/) data. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code researchers, hence, I've avoided technical jarggon. When run successfully, this code allows you to get Reddit posts and their associated comments within a designated timeframe. You will get this data organized in a .csv file that can be opened on Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
+This code tool uses [pushshift.io](https://pushshift.io/) and `python` to crawl [Reddit](https://www.reddit.com/) data from defined dates. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code researchers, hence, I've avoided technical jarggon. When run successfully, this code allows you to get Reddit posts and their associated comments within a designated timeframe (unlike other tools that). You will get this data organized in a .csv file that can be opened on Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
 
 ## Getting Started
 
