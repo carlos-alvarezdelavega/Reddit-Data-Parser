@@ -1,10 +1,10 @@
 # About the Pushshift Reddit API Crawler
 
-This code tool uses [pushshift.io](https://pushshift.io/) and `python` to crawl [Reddit](https://www.reddit.com/) data from defined dates. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code researchers, hence, I've avoided technical jarggon. When run successfully, this code allows you to get Reddit posts and their associated comments within a designated timeframe (unlike other tools that). You will get this data organized in a .csv file that can be opened on Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
+This code tool uses [pushshift.io](https://pushshift.io/) and `python` to crawl [Reddit](https://www.reddit.com/) data from defined dates. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code researchers, hence, I've avoided technical jarggon. When run successfully, this code allows you to crawl Reddit posts and their associated comments within a designated timeframe (unlike other tools, such as [PRAW](https://praw.readthedocs.io/en/stable/) that crawl latest or popular posts). You will get this data organized in a .csv file that can be opened on Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
 
 ## Getting Started
 
-### How do I run Python on my computer?
+### Running Python on your computer
 I *strongly* recommend you download and install [Anaconda](https://www.anaconda.com/) and use [Jupyter Notebook](https://jupyter.org/) to run your `python` code. Jupyter Notebook allows you to break down your code's components, detect, and correct errors easily. It also installs the pre-required libraries to run this tool successfully. Check out a guide on [how to install Anaconda and run your Jupyter Notebook](https://sparkbyexamples.com/python/install-anaconda-jupyter-notebook/).
 
 ### Python notes to keep in mind
@@ -22,7 +22,7 @@ after = "1514764800" #Timestamp January 1st
 
 Once you've opened your new Jupyter Notebook, head to the folder above. Copy and paste the code into the notebook's cells. Each cell is commented in the code. 
 
-## Breaking Down the Tool's Components
+## Tool's Components
 
 ### Import libraries
 
