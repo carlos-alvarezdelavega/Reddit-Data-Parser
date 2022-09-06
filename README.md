@@ -1,6 +1,6 @@
 # About the Pushshift Reddit API Crawler
 
-This code tool uses the [pushshift.io](https://pushshift.io/) and `python` to scrap [Reddit](https://www.reddit.com/) data. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code researchers, hence, I've avoided technical jarggon. When run successfully, this code allows you to get Reddit posts and their associated comments within a designated timeframe. You will get this data organized in a .csv file that can be opened on Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
+This code tool uses the [pushshift.io](https://pushshift.io/) and `python` to scrap [Reddit](https://www.reddit.com/) data. This document will walk you through the steps needed to run the code. This repository is meant for low- and no-code researchers (like me!), hence, I've avoided technical jarggon. When run successfully, this code allows you to get Reddit posts and their associated comments within a designated timeframe. You will get this data organized in a .csv file that can be opened on Microsoft Excel or Google Sheets. [Read more about the Pushshift API](https://github.com/pushshift/api).
 
 ## Getting Started
 
@@ -8,7 +8,7 @@ This code tool uses the [pushshift.io](https://pushshift.io/) and `python` to sc
 I *strongly* recommend you download and install [Anaconda](https://www.anaconda.com/) and use [Jupyter Notebook](https://jupyter.org/) to run your `python` code. Jupyter Notebook allows you to break down your code's components, detect, and correct errors easily. It also installs the pre-required libraries to run this tool successfully. Check out a guide on [how to install Anaconda and run your Jupyter Notebook](https://sparkbyexamples.com/python/install-anaconda-jupyter-notebook/).
 
 ### Python notes to keep in mind
-In Python, hashtag '#' symbols represent in-line comments. Comments are lines of code that are *ignored* when running the program. You'll see the tool uses these comments to signpost key components. Comments are helpful to track the relevant variables you want to manipulate. For example: 
+In Python, hashtag '#' symbols represent in-line comments. Comments are lines of code that are _ignored_ when running the program. You'll see the tool uses comments to signpost key components. Also, comments are helpful to track the relevant variables you want to manipulate. For example: 
 
 ```python
 sub = "digitalnomad" #The name of the subreddit as it appears in its URL, in this case, https://www.reddit.com/r/digitalnomad/
@@ -39,11 +39,11 @@ import time
 import datetime
 ```
 
-### Defining the timeframe function
+### Defining the PushshiftData function
 
-A function is a block of code which only runs when it is called.
+A function is a block of code which only runs when it is called. In python, functions are defined with the `def` term.
 
-You can pass data, known as parameters, into a function. This function sets up the Pushshift URL to get the Reddit data from. 
+You can pass data, known as parameters, into a function. This function below sets up the Pushshift URL to get the Reddit data from, its parameters are `after`, `before`, `sub` (you will provide these parameters later). 
 
 ```python
 # In[2]:
@@ -54,4 +54,123 @@ def getPushshiftData(after, before, sub):
     r = requests.get(url)
     data = json.loads(r.text)
     return data['data']
+```
+### Organizing the Reddit data
+
+This function will "collect" and organize the data retrieved by the Pushshift API. 
+
+```python
+# In[3]:
+
+def collectSubData(subm):
+    subData = list() #list to store data points
+    title = subm['title']
+    body = subm['selftext'] if 'selftext' in subm else ''
+    url = subm['url']
+    try:
+        flair = subm['link_flair_text']
+    except KeyError:
+        flair = "NaN"    
+    author = subm['author']
+    sub_id = subm['id']
+    score = subm['score']
+    created = datetime.datetime.fromtimestamp(subm['created_utc']) #For example, 1520561700.0
+    numComms = subm['num_comments']
+    permalink = subm['permalink']
+    
+    subData.append((sub_id,title,body,url,author,score,created,numComms,permalink,flair))
+    subStats[sub_id] = subData
+```
+### Determining data parameters 
+
+**This step is IMPORTANT**
+
+For the tool to properly work, you must provide the following parameters as strings, that is, enclosed in quotaion marks. The `getPushshiftData` function will use these global variables to parse the data. 
+
+```python
+# In[4]:
+
+sub = "digitalnomad" #The name of the subreddit as it appears in its URL, in this case, https://www.reddit.com/r/digitalnomad/
+after = "1662023249" #September 1st 2022
+before = "1662455249" #September 6th 2022
+subCount = 0
+subStats = {}
+
+```
+
+Let's break down the variables declared above:
+
+-The `sub` variable stores the subreddit's _unique_ name, found in its URL on Reddit. In this case, the variable stores the "digitalnomad" subreddit's link. This name will be used to "identify" the subReddit when querying the API. 
+
+-The `after` and `before` variables constrain the timeframe from which the data will be retreived. The strings in each variable are _unix time stamps_ that can be generated by websites like [timestampgenerator](https://timestampgenerator.com/). 
+
+-In the example above, the `before` variable is set to the equivelant of 6 September 2022 at 09:07 am in europe central time. The the `after` variable is set to the equivelant of 1 September 2022 at 09:07 am in europe central time. This means that the tool will only parse data between September 1st and 6th, 2022. 
+
+-The `subCount` variable will help keep count of the posts retrieved when parsing the data. Currently, it's set to 0 to ensure all available posts are retrieved. 
+
+-The `subStats` variable is set to an empty object, which will later be populated when constructing the cvs file. 
+
+### Parsing the data
+
+The `data` variable passes the (previously defined) `getPushshiftData()` function as an argument. Now that we have defined the `getPushshiftData()`'s parameters, it can call the Pushshift's API and parse the required data. 
+
+In your Jupyter notebook, you will get a preview of the data, structured as an object. 
+
+```python
+# In[5]:
+
+data = getPushshiftData(after, before, sub)
+while len(data) > 0:
+    for submission in data:
+        collectSubData(submission)
+        subCount+=1
+    print(len(data))
+    print(str(datetime.datetime.fromtimestamp(data[-1]['created_utc'])))
+    after = data[-1]['created_utc']
+    data = getPushshiftData(after, before, sub)
+    
+print(len(data))
+```
+### Previewing the parsed data
+
+These commands will print to your Jupyter notebook and give you a preview of the parsed data. 
+
+
+```python
+# In[6]:
+
+print(str(len(subStats)) + " submissions have added to list") #Prints the number of posts parsed. 
+print("1st entry is:")
+print(list(subStats.values())[0][0][1] + " created: " + str(list(subStats.values())[0][0][5])) #Prints the first post parsed. 
+print("Last entry is:")
+print(list(subStats.values())[-1][0][1] + " created: " + str(list(subStats.values())[-1][0][5])) #Prints the last entry parsed.
+```
+
+### Compiling the data into a cvs file
+
+The `updateSubs_file()` function compiles the queried data into a cvs file that can be opened with software like Microsoft Excel or Google Sheets. 
+
+You may alter variables such as `location`, `filename`, and `headers` to customize the names and location of your file. 
+
+At the end of this block, the `updateSubs_file()` function is called, thereby compiling your file. 
+
+```python
+# In[7]:
+
+
+def updateSubs_file():
+    upload_count = 0
+    location = "pushshift-data" #location of file in your computer, that is, the folder's where you want to save the file
+    filename = input("example-file") #file's name as it will be saved
+    file = location + filename
+    with open(file, 'w', newline='', encoding='utf-8') as file: 
+        a = csv.writer(file, delimiter=',')
+        headers = ["Post ID","Title","Post Body","Url","Author","Score","Publish Date","Total No. of Comments","Permalink","Flair"] #Headers for the csv file's columns
+        a.writerow(headers)
+        for sub in subStats:
+            a.writerow(subStats[sub][0])
+            upload_count+=1
+            
+        print(str(upload_count) + " submissions have been uploaded")
+updateSubs_file()
 ```
