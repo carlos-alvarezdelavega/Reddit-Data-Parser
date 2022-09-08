@@ -61,11 +61,11 @@ At this point, you will define _key variables_ for the tool to work properly.
 
 Let's break down the variables below:
 
--The `sub` variable stores the name of the subReddit from which you want to parse the data as shown in Reddit's unique URL. In the example below, it is the `digitalnomad` subReddit. 
--The `after` variable stores a [unix timestamp](https://www.unixtimestamp.com/), which indicates the exact date after which the data will be retrieved. In the example below, the unix timestamp is set to Junuary 1st, 2019.
--The `before` variable stores another unix timestamp, which indicates the date until which the data will be retrieve. 
--Think of the `after` and `before` variables as a constrained timeframe from which data will be parsed. 
--The `subCount` and `subStats` variables will be used in a later function to aid the parsing and keeping track of posts retreived. 
+*The `sub` variable stores the name of the subReddit from which you want to parse the data as shown in Reddit's unique URL. In the example below, it is the `digitalnomad` subReddit. 
+*The `after` variable stores a [unix timestamp](https://www.unixtimestamp.com/), which indicates the exact date after which the data will be retrieved. In the example below, the unix timestamp is set to Junuary 1st, 2019.
+*The `before` variable stores another unix timestamp, which indicates the date until which the data will be retrieve. 
+    *Think of the `after` and `before` variables as a constrained timeframe from which data will be parsed. 
+*The `subCount` and `subStats` variables will be used in a later function to aid the parsing and keeping track of posts retreived. 
 
 ```python
 # In[4]:
