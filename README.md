@@ -76,4 +76,30 @@ before = "1517443200" #February 1st
 subCount = 0
 subStats = {}
 ```
+### A function that parses sub data
+This function will "collect" and organize the desired subReddit data into a list for later conversion into a .csv file.
+Using the [Pushshift API parameters](https://pushshift.io/api-parameters/), you can collect much more information than the defined in the function below. 
+
+```python
+# In[3]:
+
+def collectSubData(subm):
+    subData = list() #list to store data points
+    title = subm['title']
+    body = subm['selftext'] if 'selftext' in subm else ''
+    url = subm['url']
+    try:
+        flair = subm['link_flair_text']
+    except KeyError:
+        flair = "NaN"    
+    author = subm['author']
+    sub_id = subm['id']
+    score = subm['score']
+    created = datetime.datetime.fromtimestamp(subm['created_utc']) #For example, 1520561700.0
+    numComms = subm['num_comments']
+    permalink = subm['permalink']
+    
+    subData.append((sub_id,title,body,url,author,score,created,numComms,permalink,flair))
+    subStats[sub_id] = subData
+```
 ## Feel free to reach out should you have any questions!
